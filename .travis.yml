@@ -13,6 +13,10 @@ script:
   - make
   - make test
 
+install:
+  - if [ "$CXX" == "g++" ]; then export CXX="g++-5"; export CC="gcc-5"; fi
+  - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.6"; export CC="clang-3.6"; fi
+
 addons:
   apt:
     sources:
