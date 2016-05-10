@@ -24,4 +24,5 @@ addons:
       - g++-5
       - clang-3.6
       - cmake
+      - cmake-data
 
