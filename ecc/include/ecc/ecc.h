@@ -1,15 +1,18 @@
 #pragma once
 
-#include <array>
+#include "ecc/key.h"
+
+#include <vector>
+#include <memory>
 
 namespace Ecc
 {
 
-class IKey
+class ISignature
 {
 };
 
-template<size_t HashSize>
-sign(IKey const & key, std::array<uint8_t, HashSize> const & hash);
+std::unique_ptr<ISignature> sign(std::unique_ptr<IKey> const & key, std::vector<uint8_t> const & hash);
+bool verify(std::unique_ptr<IKey> const & key, std::vector<uint8_t> const & hash, std::unique_ptr<ISignature> const & signature);
 
 }

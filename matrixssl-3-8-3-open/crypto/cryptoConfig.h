@@ -60,7 +60,7 @@
 
 #define MIN_DH_BITS		1024
 
-#define USE_BURN_STACK /**< @security Zero sensitive data from the stack. */
+//#define USE_BURN_STACK /**< @security Zero sensitive data from the stack. */
 
 
 
@@ -68,7 +68,7 @@
 /**
 	Public-Key Algorithm Support.
 */
-#define USE_RSA
+//#define USE_RSA
 #define USE_ECC
 //#define USE_DH
 
@@ -93,9 +93,9 @@
 */
 #ifdef USE_ECC
 //#define USE_BRAIN224R1
-//#define USE_BRAIN256R1
-//#define USE_BRAIN384R1
-//#define USE_BRAIN512R1
+#define USE_BRAIN256R1
+#define USE_BRAIN384R1
+#define USE_BRAIN512R1
 #endif
 
 /******************************************************************************/

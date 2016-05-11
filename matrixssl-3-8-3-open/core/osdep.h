@@ -44,7 +44,7 @@
 #if defined(__linux__) /* Linux and Android */
  #define POSIX
  #define LINUX
- #define MATRIX_USE_FILE_SYSTEM
+ //#define MATRIX_USE_FILE_SYSTEM
 #elif defined(__APPLE__) && defined(__MACH__) /* Mac OS X */
  #define POSIX
  #define OSX
