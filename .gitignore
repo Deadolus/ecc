@@ -5,4 +5,7 @@ CMakeFiles/
 CTestTestfile.cmake
 cmake_install.cmake
 Makefile
+CMakeCache.txt
+doxygen
+ecc-aufgabe.*
 
