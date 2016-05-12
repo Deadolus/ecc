@@ -8,4 +8,5 @@ Makefile
 CMakeCache.txt
 doxygen
 ecc-aufgabe.*
+*.a
 
