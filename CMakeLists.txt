@@ -51,6 +51,8 @@ add_library(matrixssl
 target_include_directories(matrixssl
   PUBLIC matrixssl-3-8-3-open
   )
+target_link_libraries( matrixssl
+  PUBLIC rt)
 
 ###############################################################################
 
@@ -76,7 +78,6 @@ add_executable(ecc-test
   ecc-test/util.cc)
 
 target_link_libraries(ecc-test
-  PUBLIC rt
   PRIVATE googletest
   PRIVATE googlemock-main
   PRIVATE ecc)
