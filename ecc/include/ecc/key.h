@@ -17,11 +17,7 @@ public:
 
 class Key : public IKey
 {
-
     psEccKey_t key;
-    //int32_t* key = nullptr;
-    //size_t length = 0;
-
 public:
     psEccKey_t getKey() const;
     void setKey(const psEccKey_t &value);
