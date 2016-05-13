@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 
+#include <iostream>
+
 #include <crypto/cryptoApi.h>
 #define USE_SECP256R1
 
@@ -26,15 +28,20 @@ namespace Ecc {
   /// @return Signature of the signed hash
 std::unique_ptr<ISignature> sign(std::unique_ptr<IKey> const & key, std::vector<uint8_t> const & hash) {
   initialize();
-  psPool_t			*pool = nullptr;
-  const psEccCurve_t	*curve;
+  psPool_t			*pool = NULL;
+  //const psEccCurve_t	*curve;
 
   //unsigned char signature[128]{};
     std::unique_ptr<Signature> signature(new Signature);
+  //std::unique_ptr<Signature> signature(128);
+    signature->setLength(128);
+    //unsigned char		sk1k2[128];
+    //std::cout << "size of sk1k2 "<<sizeof(sk1k2);
   //Initialize stuff
-  if (getEccParamById(IANA_SECP256R1, &curve) < 0) {
+  /*if (getEccParamById(IANA_SECP256R1, &curve) < 0) {
     return nullptr;
   }
+  _psTrace("After getEccParamById");*/
   /*if (psEccGenKey(pool, &k1, curve, NULL) < 0) {
       return nullptr;
   }*/
@@ -49,11 +56,16 @@ std::unique_ptr<ISignature> sign(std::unique_ptr<IKey> const & key, std::vector<
       goto L_FAIL;
   }*/
 psEccKey_t private_key = key->getKey();
-uint16_t length = signature->getLength();
-  if (psEccDsaSign(pool, &private_key, hash.data(), hash.size(), signature->getData().get(), &length, 0, NULL) < 0) {
-      _psTrace("Signing failed.");
+  _psTrace("After getKey\n");
+//uint16_t sig_length = sizeof(signature->getData());
+  uint16_t sig_length = signature->getLength();
+  uint16_t hash_length = hash.size()*sizeof(hash.data());
+  std::cout << "Sig length"<<sig_length<<" Hash length"<<hash_length<<"\n";
+  if (psEccDsaSign(pool, &private_key, hash.data(), hash_length, signature->getData()->data(), &sig_length, 0, NULL) < 0) {
+      _psTrace("Signing failed.\n");
       return nullptr;
   }
+    _psTrace("After signing\n");
  //psEccNewKey(pool, key, eccCurve);
   //Process signature with hash
   //signature = psEccDsaSign(pool, eccKey, hash, hash.size(),  ) ;
@@ -72,24 +84,34 @@ uint16_t length = signature->getLength();
 bool verify(std::unique_ptr<IKey> const & key, std::vector<uint8_t> const & hash, std::unique_ptr<ISignature> const & signature) {
   initialize();
     psPool_t *pool = nullptr;
+    int32_t status;
+    psEccKey_t public_key = key->getKey();
 
   // ...
   //psEccDsaVerify();
-          /*if (psEccDsaVerify(pool, &k1_imported, in, inlen, signature->data, signature->length,
+    uint16_t sig_length = signature->getLength();
+    uint16_t hash_length = hash.size()*sizeof(hash.data());
+          if (psEccDsaVerify(pool, &public_key, hash.data(), hash_length, signature->getData()->data(),  sig_length,
                   &status, NULL) < 0 || status != 1) {
               _psTrace("K1 signature didn't validate.");
               return false;
-          }*/
+          }
+            //if (psEccDsaSign(pool, &private_key, hash.data(), hash_length, signature->getData()->data(), &sig_length, 0, NULL) < 0)
 
-  return false;
+  return true;
 }
 
-std::shared_ptr<unsigned char> Signature::getData() const
+/*Signature::Signature(int16_t length):length(length) {
+    data = std::make_shared<std::vector<unsigned char>>();
+    data->resize(length);
+}*/
+
+std::shared_ptr<std::vector<unsigned char>> Signature::getData() const
 {
     return data;
 }
 
-void Signature::setData(const std::shared_ptr<unsigned char> &value)
+void Signature::setData(const std::shared_ptr<std::vector<unsigned char>> &value)
 {
     data = value;
 }
@@ -102,6 +124,9 @@ uint16_t Signature::getLength() const
 void Signature::setLength(const uint16_t &value)
 {
     length = value;
+    if(!data)
+        data = std::make_shared<std::vector<unsigned char>>();
+    data->resize(length);
 }
 }
 

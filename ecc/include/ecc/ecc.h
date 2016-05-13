@@ -10,22 +10,29 @@ namespace Ecc
 
 class ISignature
 {
-    virtual std::shared_ptr<unsigned char> getData() const = 0;
-    virtual void setData(const std::shared_ptr<unsigned char> &value) = 0;
+public:
+    //todo delete default constructor?
+   // explicit ISignature(int16_t length);
+    //ISignature() = delete;
+    virtual std::shared_ptr<std::vector<unsigned char>> getData() const = 0;
+    virtual void setData(const std::shared_ptr<std::vector<unsigned char>> &value) = 0;
     virtual uint16_t getLength() const = 0;
     virtual void setLength(const uint16_t &value) = 0;
 
 };
 
 class Signature : public ISignature {
-    std::shared_ptr<unsigned char> data = nullptr;
-    uint16_t length = 0;
-
 public:
-    std::shared_ptr<unsigned char> getData() const;
-    void setData(const std::shared_ptr<unsigned char> &value);
+    //explicit Signature(int16_t length);
+   // Signature() = delete;
+    std::shared_ptr<std::vector<unsigned char>> getData() const;
+    void setData(const std::shared_ptr<std::vector<unsigned char>> &value);
     uint16_t getLength() const;
     void setLength(const uint16_t &value);
+private:
+    std::shared_ptr<std::vector<unsigned char>> data{nullptr};
+    uint16_t length{0};
+
 };
 
 std::unique_ptr<ISignature> sign(std::unique_ptr<IKey> const & key, std::vector<uint8_t> const & hash);
