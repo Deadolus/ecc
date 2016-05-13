@@ -76,7 +76,6 @@ add_executable(ecc-test
   ecc-test/util.cc)
 
 target_link_libraries(ecc-test
-  PRIVATE gtest
   PRIVATE googlemock-main
   PRIVATE ecc)
 
