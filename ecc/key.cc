@@ -24,7 +24,7 @@ std::unique_ptr<IKey> public_key(std::string key) {
         rc = PS_FAIL;
         return nullptr;
     }
-    std::unique_ptr<Key> retkey(new Key);
+    std::unique_ptr<IKey> retkey(new Key);
     if(!retkey) {
         _psTrace("Couldn't create key\n");
         return nullptr;
@@ -40,7 +40,7 @@ std::unique_ptr<IKey> private_key(std::string key) {
     if(result != PS_SUCCESS) {
         throw;
     }
-    std::unique_ptr<Key> retkey(new Key);
+    std::unique_ptr<IKey> retkey(new Key);
     if(!retkey) {
         _psTrace("Couldn't create key\n");
         return nullptr;

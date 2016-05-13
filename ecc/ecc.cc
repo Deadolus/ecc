@@ -25,7 +25,7 @@ namespace Ecc {
 std::unique_ptr<ISignature> sign(std::unique_ptr<IKey> const & key, std::vector<uint8_t> const & hash) {
     initialize();
     psPool_t *pool = NULL;;
-    std::unique_ptr<Signature> signature(new Signature);
+    std::unique_ptr<ISignature> signature(new Signature);
     //set length to 128 bytes
     signature->setLength(128);
     psEccKey_t private_key = key->getKey();
