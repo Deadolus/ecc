@@ -14,7 +14,6 @@ inline void initialize() {
         initialized = true;
     }
 }
-
 }
 
 namespace Ecc {
@@ -27,6 +26,7 @@ std::unique_ptr<ISignature> sign(std::unique_ptr<IKey> const & key, std::vector<
     initialize();
     psPool_t *pool = NULL;;
     std::unique_ptr<Signature> signature(new Signature);
+    //set length to 128 bytes
     signature->setLength(128);
     psEccKey_t private_key = key->getKey();
     uint16_t sig_length = signature->getLength();
