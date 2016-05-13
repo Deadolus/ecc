@@ -1,9 +1,8 @@
 #include "ecc/ecc.h"
+#include <crypto/cryptoApi.h>
+
 #include <memory>
 #include <vector>
-
-#include <crypto/cryptoApi.h>
-#define USE_SECP256R1
 
 namespace {
 
@@ -26,13 +25,13 @@ namespace Ecc {
 /// @return Signature of the signed hash
 std::unique_ptr<ISignature> sign(std::unique_ptr<IKey> const & key, std::vector<uint8_t> const & hash) {
     initialize();
-    psPool_t			*pool = NULL;;
+    psPool_t *pool = NULL;;
     std::unique_ptr<Signature> signature(new Signature);
     signature->setLength(128);
-
     psEccKey_t private_key = key->getKey();
     uint16_t sig_length = signature->getLength();
     uint16_t hash_length = hash.size()*sizeof(hash.data());
+
     if (psEccDsaSign(pool, &private_key, hash.data(), hash_length, signature->data(), &sig_length, 0, NULL) < 0) {
         //_psTrace("Signing failed.\n");
         return nullptr;
@@ -49,9 +48,9 @@ bool verify(std::unique_ptr<IKey> const & key, std::vector<uint8_t> const & hash
     psPool_t *pool = nullptr;
     int32_t status;
     psEccKey_t public_key = key->getKey();
-
     uint16_t sig_length = signature->getLength();
     uint16_t hash_length = hash.size()*sizeof(hash.data());
+
     if (psEccDsaVerify(pool, &public_key, hash.data(), hash_length, signature->data(),  sig_length,
                        &status, NULL) < 0 || status != 1) {
         //_psTrace("Signature didn't validate.");
