@@ -1,6 +1,6 @@
 # ecc
 
-[![Build Status](https://travis-ci.org/raphaelmeyer/ecc.svg?branch=master)](https://travis-ci.org/raphaelmeyer/ecc)
+[![Build Status](https://travis-ci.org/deadolus/ecc.svg?branch=master)](https://travis-ci.org/deadolus/ecc)
 
 ## references
 
