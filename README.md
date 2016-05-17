@@ -1,6 +1,6 @@
 # ecc
 
-[![Build Status](https://travis-ci.org/deadolus/ecc.svg?branch=master)](https://travis-ci.org/deadolus/ecc)
+[![Build Status](https://travis-ci.org/Deadolus/ecc.svg?branch=master)](https://travis-ci.org/Deadolus/ecc)
 
 ## references
 
